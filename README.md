@@ -188,6 +188,12 @@ Subscribers can opt into certain queues with `on_event :whatever, sidekiq_option
 
 You can also override _all queue choices_ with `ENV['REACTOR_QUEUE']`. You may want to do this if you wish to contain the 'cascade' of events for more expensive or risky operations.
 
+#### Executing in a Console
+
+By default, running a Rails console in a `production` `ENV['RACK_ENV']` will cause publish events to
+bomb out unless `srsly: true` is provided as an additional parameter to event publishing. To control
+this behavior, set `ENV['REACTOR_CONSOLE_ENABLED']` to a value.
+
 ## Contributing
 
 1. Fork it
@@ -206,3 +212,13 @@ For testing Reactor itself we use Thoughtbot's [appraisal gem](https://github.co
 
 We are Ruby developers ourselves, and we use all of our open source projects in production. We always encourge forks, pull requests, and issues. Get in touch with the Hired Engineering team at _opensource@hired.com_.
 
+
+
+## Releasing
+
+If you are a gem maintainer, you can build and release this gem with:
+
+```
+$ bundle exec rake build
+$ gem push pkg/reactor(version).gem
+```
