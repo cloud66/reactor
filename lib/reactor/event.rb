@@ -37,7 +37,7 @@ class Reactor::Event
                     end
 
     if need_to_fire
-      data.merge!(fired_at: Time.current, name: name)
+      data.merge!(fired_at: Time.current.to_s, name: name)
       fire_block_subscribers(data, name)
     end
   end
@@ -65,13 +65,12 @@ class Reactor::Event
       end
 
       message = new(data.merge(event: name, uuid: SecureRandom.uuid))
-
       Reactor.validator.call(message)
-
+      message_data = message.__data__.to_hash
       if message.at
-        perform_at message.at, name, message.__data__
+        perform_at message.at, name, message_data
       else
-        perform_async name, message.__data__
+        perform_async name, message_data
       end
     end
 
