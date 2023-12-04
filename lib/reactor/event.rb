@@ -39,7 +39,7 @@ class Reactor::Event
 
     if need_to_fire
       data.merge!(fired_at: Time.current.to_s, name: name)
-      fire_block_subscribers(data, name)
+      fire_block_subscribers(data.to_hash, name)
     end
   end
 
