@@ -1,7 +1,7 @@
 class Reactor::Event
   include Sidekiq::Worker
 
-  sidekiq_options queue: ENV['REACTOR_QUEUE'] || ::Reactor.default_queue || Sidekiq.default_worker_options['queue']
+  sidekiq_options queue: ENV['REACTOR_QUEUE'] || "default"
 
   CONSOLE_CONFIRMATION_MESSAGE = <<-eos
     It looks like you are on a production console. Only fire an event if you intend to trigger 
