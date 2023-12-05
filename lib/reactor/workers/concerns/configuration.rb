@@ -29,6 +29,7 @@ module Reactor
 
         def event_queue
           queue_override = ENV['REACTOR_QUEUE']
+          queue_override ||= ::Reactor.default_queue
           queue_override.present? ? set(queue: queue_override) : self
         end
       end

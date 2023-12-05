@@ -70,9 +70,9 @@ class Reactor::Event
       Reactor.validator.call(message)
       message_data = message.__data__.to_hash
       if message.at
-        perform_at message.at, name, message_data
+        event_queue.perform_at(message.at, name, message_data)
       else
-        perform_async name, message_data
+        event_queue.perform_async(name, message_data)
       end
     end
 
@@ -98,6 +98,14 @@ class Reactor::Event
       job.delete if job
 
       publish(name, data.except([:was, :if])) if data[:at].try(:future?)
+    end
+
+    private
+
+    def event_queue
+      queue_override = ENV['REACTOR_QUEUE']
+      queue_override ||= ::Reactor.default_queue
+      queue_override.present? ? set(queue: queue_override) : self
     end
   end
 
