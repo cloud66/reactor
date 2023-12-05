@@ -9,7 +9,6 @@ require "reactor/workers/concerns/configuration"
 require "reactor/workers"
 require "reactor/subscription"
 require "reactor/models"
-require "reactor/event"
 
 module Reactor
   SUBSCRIBERS = {}.with_indifferent_access
@@ -63,3 +62,5 @@ module Reactor
     Reactor.rails_6_or_greather? ? :module_parents : :parents
   end
 end
+
+require "reactor/event"
