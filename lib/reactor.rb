@@ -47,6 +47,14 @@ module Reactor
     @validator || BASE_VALIDATOR
   end
 
+  def default_queue
+    @default_queue
+  end
+
+  def default_queue=(value)
+    @default_queue = value
+  end
+
   def rails_6_or_greather?
     Gem.loaded_specs['rails'].version.to_s.to_i >= 6
   end
